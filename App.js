@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import * as React from 'react';
-import {Button, View, Text} from 'react-native';
+import {Button, View, Text, Image} from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {NavigationContainer} from '@react-navigation/native';
 import HomeScreen from './src/screens/HomeScreen';
@@ -15,7 +15,7 @@ export default function App() {
     <NavigationContainer>
       <Drawer.Navigator initialRouteName="Home">
         <Drawer.Screen name="Home" component={HomeScreen} />
-        <Drawer.Screen name="Meds" component={MedicineScreen} />
+        <Drawer.Screen name="Meds" component={MedicineScreen}  />
         <Drawer.Screen name="Diet" component={DietScreen} />
         <Drawer.Screen name="Diapers" component={DiaperScreen} />
       </Drawer.Navigator>
