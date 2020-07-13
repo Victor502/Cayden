@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "404363134586",
+    "firebase_url": "https://caydenscare.firebaseio.com",
+    "project_id": "caydenscare",
+    "storage_bucket": "caydenscare.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:404363134586:android:b126b82023f106be52ddc3",
+        "android_client_info": {
+          "package_name": "com.cayden"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "404363134586-cv8ahc2ivmsihmh64ejkd6ba5k9kbgms.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZQXBmso6ShqNA-vs8By8KBCzQaHLXn9o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "404363134586-cv8ahc2ivmsihmh64ejkd6ba5k9kbgms.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
