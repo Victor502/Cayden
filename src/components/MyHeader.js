@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, Text} from 'react-native';
-// import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { Container, Header, Left, Body, Right, Button, Icon, Title } from 'native-base';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 // import HeaderBackButton from './HeaderBackButton';
-// import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-function Header(props) {
+function MyHeader(props) {
   const MenuOption = () => {
     return (
       <View>
@@ -28,17 +29,23 @@ function Header(props) {
     }
   };
   return (
-    <View
-      style={{
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'row',
-        marginTop: 10,
-      }}>
-      <View style={styles.leftContent}>{leftButton()}</View>
-      <View style={styles.centerContent}>{props.centerComponent}</View>
-      <View style={styles.rightContent}>{props.rightComponent}</View>
-    </View>
+    // <Container>
+        <Header>
+          <Left>
+            <Button transparent>
+              <Icon name='arrow-back' />
+            </Button>
+          </Left>
+          <Body>
+            <Title>Header</Title>
+          </Body>
+          <Right>
+            <Button transparent>
+              <Icon name='menu' />
+            </Button>
+          </Right>
+        </Header>
+      // </Container>
   );
 }
 
@@ -48,4 +55,4 @@ const styles = StyleSheet.create({
   rightContent: {flex: 1},
 });
 
-export default Header;
+export default MyHeader;
