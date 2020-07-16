@@ -1,31 +1,34 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, Button, StyleSheet, SafeAreaView} from 'react-native';
-import { Container, Header, Left, Body, Right, Icon, Title } from 'native-base';
+import {Container, Header, Left, Body, Right, Icon, Title} from 'native-base';
 import MyHeader from '../components/MyHeader.js';
-import config from '../assets/config/config.js'
-import Utility from '../assets/Utility'
+import config from '../assets/config/config.js';
+import Utility from '../assets/Utility';
 
 function HomeScreen({navigation}) {
   const [data, setData] = useState('What');
   useEffect(() => {
-    GetData()
+    GetData();
   });
 
   const GetData = async () => {
     try {
-      const res = await Utility.GetFromServer(config.api.url + '/test')
+      const res = await Utility.GetFromServer(config.api.url + '/test');
       if (res.err === 0) {
-        setData(res.msg)
+        setData(res.msg);
       } else {
-        setData('error',res.err)
+        setData('error', res.err);
       }
-    } catch(e) {
-      console.log(e)
+    } catch (e) {
+      console.log(e);
     }
-  }
+  };
+  const menu = () => {
+    navigation.toggleDrawer();
+  };
   return (
     <Container>
-      <MyHeader/>
+      <MyHeader onMenuPress={menu} />
       <View style={style.container}>
         <Text style={style.header}>Cayden's Care</Text>
         <Text style={style.header}>{data}</Text>

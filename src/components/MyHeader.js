@@ -6,46 +6,23 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 function MyHeader(props) {
-  const MenuOption = () => {
-    return (
-      <View>
-        <Text style={{textAlign: 'center'}} onPress={props.onMenuPress}>
-          Hamburger
-        </Text>
-        {/* <MaterialCommunityIcons
-          name="menu"
-          size={40}
-          color="black"
-          onPress={props.onMenuPress}
-        /> */}
-      </View>
-    );
-  };
-  const leftButton = () => {
-    if (props.leftComponent === 'back-button') {
-      return <Text>Back button</Text>;
-    } else {
-      return <MenuOption />;
-    }
-  };
+  
   return (
-    // <Container>
-        <Header>
+        <Header style={{backgroundColor: '#add8e6'}} androidStatusBarColor={'#add8e6'} noShadow>
           <Left>
-            <Button transparent>
-              <Icon name='arrow-back' />
+            <Button transparent onPress={props.onMenuPress}>
+              <Icon name='menu' style={{color: '#fff'}}/>
             </Button>
           </Left>
           <Body>
-            <Title>Header</Title>
+            <Title style={{color: '#fff'}}>Cayden's Care</Title>
           </Body>
           <Right>
-            <Button transparent>
+            {/* <Button transparent>
               <Icon name='menu' />
-            </Button>
+            </Button> */}
           </Right>
         </Header>
-      // </Container>
   );
 }
 
