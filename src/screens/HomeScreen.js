@@ -1,11 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, Button, StyleSheet, SafeAreaView} from 'react-native';
+import {View, Text, Button, StyleSheet, SafeAreaView, Platform} from 'react-native';
 import {Container, Header, Left, Body, Right, Icon, Title} from 'native-base';
 import MyHeader from '../components/MyHeader.js';
 import config from '../assets/config/config.js';
 import Utility from '../assets/Utility';
 
-function HomeScreen({navigation}) {
+// for local development
+let url = Platform.OS === 'ios'? config.api.aurl:config.api.url
+
+function HomeScreen(props) {
   const [data, setData] = useState('What');
   useEffect(() => {
     GetData();
@@ -13,7 +16,8 @@ function HomeScreen({navigation}) {
 
   const GetData = async () => {
     try {
-      const res = await Utility.GetFromServer(config.api.url + '/test');
+      console.log()
+      const res = await Utility.GetFromServer(url + '/test');
       if (res.err === 0) {
         setData(res.msg);
       } else {
@@ -24,7 +28,7 @@ function HomeScreen({navigation}) {
     }
   };
   const menu = () => {
-    navigation.toggleDrawer();
+    props.navigation.toggleDrawer();
   };
   return (
     <Container>
