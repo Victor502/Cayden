@@ -52,7 +52,7 @@ Utility = {
   },
   GetLocal: async key => {
     try {
-      let value = await syncStorage.getItem(config.storage.key_prefix + key);
+      let value = await AsyncStorage.getItem(config.storage.key_prefix + key);
       return value;
     } catch (e) {
       console.log(e);

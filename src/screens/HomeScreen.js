@@ -1,9 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import {View, Text, Button, StyleSheet, SafeAreaView, Platform} from 'react-native';
 import {Container, Header, Left, Body, Right, Icon, Title} from 'native-base';
 import MyHeader from '../components/MyHeader.js';
 import config from '../assets/config/config.js';
 import Utility from '../assets/Utility';
+import {AuthContext} from '../context/context.js'
 
 // for local development
 let url = Platform.OS === 'ios'? config.api.aurl:config.api.url
@@ -11,8 +12,9 @@ let url = Platform.OS === 'ios'? config.api.aurl:config.api.url
 function HomeScreen(props) {
   const [data, setData] = useState('What');
   useEffect(() => {
-    GetData();
+    // GetData();
   });
+  const {signOut} = useContext(AuthContext)
 
   const GetData = async () => {
     try {
@@ -30,12 +32,17 @@ function HomeScreen(props) {
   const menu = () => {
     props.navigation.toggleDrawer();
   };
+  // console.log('home props', props)
   return (
     <Container>
       <MyHeader onMenuPress={menu} />
       <View style={style.container}>
         <Text style={style.header}>Cayden's Care</Text>
         <Text style={style.header}>{data}</Text>
+      <Button
+        onPress={() => signOut()}
+        title="LogOut"
+      />
       </View>
     </Container>
   );

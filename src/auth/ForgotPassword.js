@@ -3,8 +3,8 @@ import {View, Text, SafeAreaView} from 'react-native';
 import {Form, Item, Input, Label, H2, Button} from 'native-base';
 
 function ForgotPassword(props) {
-  const [email, setEmail] = useState('example@email.com');
-  submitForgottenPW = () => {
+  const [email, setEmail] = useState('');
+  const submitForgottenPW = () => {
     console.log('forgot what');
   };
   return (
@@ -19,7 +19,8 @@ function ForgotPassword(props) {
               <Label>Email</Label>
               <Input
                 onChangeText={(text) => setEmail(text)}
-                placeholder={email}
+                placeholder={'your@email.com'}
+                value={email}
               />
             </Item>
           </Form>
@@ -28,18 +29,11 @@ function ForgotPassword(props) {
       <View style={{marginHorizontal: 30}}>
         <Button
           block
-          onPress={submitForgottenPW}
+          onPress={() => submitForgottenPW()}
           disabled={false}
           style={{backgroundColor: '#add8e6'}}>
           <Text>SUBMIT</Text>
         </Button>
-      </View>
-      <View style={{marginTop: 80, alignSelf: 'center'}}>
-        <Text
-          onPress={() => props.navigation.goBack()}
-          style={{fontSize: 24, color: '#72bcd4'}}>
-          Go Back
-        </Text>
       </View>
     </SafeAreaView>
   );

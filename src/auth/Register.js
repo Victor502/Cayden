@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, SafeAreaView, Platform} from 'react-native';
+import {View, SafeAreaView, Platform, ScrollView} from 'react-native';
 import {Form, Item, Input, Label, H2, Button, Text} from 'native-base';
 import config from '../assets/config/config.js';
 import Utility from '../assets/Utility.js';
@@ -11,8 +11,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 let url = Platform.OS === 'ios'? config.api.aurl : config.api.url
 
 function Register(props) {
-  const [name, setName] = useState('name');
-  const [email, setEmail] = useState('example@email.com');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
   //set button disabled until ready to register
@@ -35,7 +35,7 @@ function Register(props) {
             password.length > 6
           ) {
             if (name.length > 2) {
-              await this._register(email, name, password);
+              await _register(email, name, password);
               await setToken(email);
               //pass this in
               // await this.props.startLoginProcess();
@@ -108,7 +108,6 @@ function Register(props) {
     });
   };
 
-  console.log(name, email, password, password2);
   const passwordsNotMarch = () => {
     if (password !== password2) {
       return true;
@@ -116,8 +115,10 @@ function Register(props) {
       return false;
     }
   };
+  
   return (
     <SafeAreaView>
+    <ScrollView>
       <View style={{marginTop: '25%', padding: 30}}>
         <View style={{alignItems: 'center'}}>
           <H2>Hello, Welcome to Cayden's Care</H2>
@@ -129,14 +130,16 @@ function Register(props) {
               <Label>Name</Label>
               <Input
                 onChangeText={(text) => setName(text)}
-                placeholder={name}
+                placeholder={'name'}
+                value={name}
               />
             </Item>
             <Item fixedLabel>
               <Label>Email</Label>
               <Input
                 onChangeText={(text) => setEmail(text)}
-                placeholder={email}
+                placeholder={'example@email.com'}
+                value={email}
               />
             </Item>
           </Form>
@@ -154,10 +157,10 @@ function Register(props) {
               onChange={(v) => setPassword2(v)}
             />
           </Form>
-          {!EmailValidator.validate(email) && (
+          {email.length > 0 && !EmailValidator.validate(email) && (
             <Text style={{color: 'red'}}>Must be a valid Email address</Text>
           )}
-          {name.length < 3 && (
+          {name.length > 0 && name.length < 3 && (
             <Text style={{color: 'red'}}>Please enter a name</Text>
           )}
           {password !== '' && password.length < 8 && (
@@ -179,13 +182,7 @@ function Register(props) {
           <Text>REGISTER</Text>
         </Button>
       </View>
-      <View style={{marginTop: 80, alignSelf: 'center'}}>
-        <Text
-          onPress={() => props.navigation.goBack()}
-          style={{fontSize: 24, color: '#72bcd4'}}>
-          Go Back
-        </Text>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
