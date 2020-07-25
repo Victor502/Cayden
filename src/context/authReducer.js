@@ -35,5 +35,10 @@ export const initialState = {
           user: action.id,
           userToken: action.token,
         };
+      case 'LOADING':
+        return {
+          ...prevState,
+          isLoading: action.loading
+        };
     }
   }

@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {View, SafeAreaView, Platform, ScrollView} from 'react-native';
-import {Form, Item, Input, Label, H2, Button, Text} from 'native-base';
+import {Form, Item, Input, Label, H2, Button, Text, Toast, Spinner} from 'native-base';
 import config from '../assets/config/config.js';
 import Utility from '../assets/Utility.js';
 import PasswordTextBox from '../components/PasswordTextBox.js';
@@ -18,13 +18,15 @@ function Register(props) {
   //set button disabled until ready to register
   const [registerDisable, setRegisterDisable] = useState(true);
   const [validEmail, setValidEmail] = useState(false);
+  const [loading, setLoading] = useState(false);
+
 
   useEffect(() => {
     checkValid();
     setValidEmail(EmailValidator.validate(email))
   });
 
-  register = async () => {
+  const register = async () => {
     setRegisterDisable(true);
       try {
         if (email && validEmail) {
@@ -32,19 +34,23 @@ function Register(props) {
             password &&
             password2 &&
             password === password2 &&
-            password.length > 6
+            password.length > 7
           ) {
             if (name.length > 2) {
-              await _register(email, name, password);
-              await setToken(email);
-              //pass this in
-              // await this.props.startLoginProcess();
+              let res = await _register(email, name, password);
+              console.log('res', res)
+              setLoading(true)
+              if (typeof res !== 'undefined') {
+                await setToken(email);
+                setLoading(false)
+              }
+              setLoading(false)
             } else {
               alert('Name is too short');
               setRegisterDisable(false);
             }
           } else {
-            alert('Passwords are mismatched');
+            alert('Passwords need to be fixed');
             setRegisterDisable(false);
           }
         } else {
@@ -57,7 +63,7 @@ function Register(props) {
       }
   };
 
-  _register = async (email, name, password) => {
+  const _register = async (email, name, password) => {
     try {
       let res = await Utility.PostToServer(url + '/newuser', {
         name: name,
@@ -67,12 +73,11 @@ function Register(props) {
       if (typeof res.err !== 'undefined' && res.err === 0) {
         return res;
       } else {
-        console.log('Registration error : ', res.msg);
-        let message = 'error';
-        if (res.msg.indexOf('duplicate')) {
-          message = email + ' already exists';
-        }
-        throw new Error(res.err);
+        Toast.show({
+              text: res.msg,
+              textStyle: { textAlign: 'center', marginVertical: 5 },
+              type: "danger"
+            })
       }
     } catch (e) {
       console.log(e);
@@ -80,7 +85,7 @@ function Register(props) {
     }
   };
 
-  checkValid = () => {
+  const checkValid = () => {
     if (
       EmailValidator.validate(email) &&
       password === password2 &&
@@ -115,6 +120,15 @@ function Register(props) {
       return false;
     }
   };
+
+  if (loading) {
+    return (
+      <SafeAreaView style={{alignItems: 'center', marginTop: '30%'}}>
+        <Spinner color={'#72bcd4'} />
+        <Text style={{color: '#72bcd4', fontSize: 24}}>Loading...</Text>
+      </SafeAreaView>
+    );
+  }
   
   return (
     <SafeAreaView>
@@ -150,11 +164,13 @@ function Register(props) {
               icon="lock"
               label="Password"
               onChange={(v) => setPassword(v)}
+              value={password}
             />
             <PasswordTextBox
               icon="lock"
               label="Retype Password"
               onChange={(v) => setPassword2(v)}
+              value={password2}
             />
           </Form>
           {email.length > 0 && !EmailValidator.validate(email) && (

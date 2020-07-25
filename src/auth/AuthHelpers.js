@@ -9,7 +9,6 @@ let url = Platform.OS === 'ios'? config.api.aurl : config.api.url
 
 export const startLoginProcess = async () => {
   console.log('startloginprocess 1');
-
     try {
       // Check if signed in before
       let access_token = await getAccessToken();
@@ -47,28 +46,30 @@ export const startLoginProcess = async () => {
 
 };
 
-export const signIn = async (email, password) => {
-  // setLoading(true)
-  if (email && password) {
-    try {
-    //   setLoading(true);
-      await _signIn(email, password);
-      await setToken(email);
-    //   setLoading(false);
+/**
+  // dont need
+  export const signIn = async (email, password) => {
+    // setLoading(true)
+    if (email && password) {
+      try {
+      //   setLoading(true);
+        await _signIn(email, password);
+        await setToken(email);
+      //   setLoading(false);
 
-      //set logged in to true
-      // this._redirect();
-    //   startLoginProcess()
-    } catch (err) {
-    //   setLoading(false);
-      console.log(err);
+        //set logged in to true
+        // this._redirect();
+      //   startLoginProcess()
+      } catch (err) {
+      //   setLoading(false);
+        console.log(err);
+      }
     }
-  }
-};
+  };
+*/
 
 export const _signIn = async (email, password) => {
   try {
-    //      console.log("posttoserver login", email, password);
     let res = await Utility.PostToServer(url + '/login', {
       email: email,
       pwd: password,
@@ -82,18 +83,17 @@ export const _signIn = async (email, password) => {
       console.log('_signin', res.user)
       return res.user;
     } else {
-      throw new Error(res.err);
+      return res
     }
   } catch (e) {
-    alert('Email or Password was wrong!\nPlease try Again!');
     throw new Error(e);
   }
 };
 
 export const setToken = async (email) => {
-  console.log('settoken pre');
+  // console.log('settoken pre');
   let token = Utility.GenerateToken();
-  console.log('settoken', token);
+  // console.log('settoken', token);
   await AsyncStorage.setItem(config.storage.key_prefix + 'local_token', token);
   await Utility.PostToServer(url + '/token', {
     token: token,

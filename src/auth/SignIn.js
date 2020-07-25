@@ -17,7 +17,8 @@ function SignIn(props) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
-  const {signIn} = useContext(AuthContext)
+  const authActions = useContext(AuthContext)
+  const {signIn} = authActions
 
   const loginHandler = (email, password) => {
     setLoading(true);

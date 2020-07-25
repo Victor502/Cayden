@@ -4,7 +4,7 @@ import {Container, Header, Left, Body, Right, Icon, Title} from 'native-base';
 import MyHeader from '../components/MyHeader.js';
 import config from '../assets/config/config.js';
 import Utility from '../assets/Utility';
-import {AuthContext} from '../context/context.js'
+import {AuthContext, StateContext} from '../context/context.js'
 
 // for local development
 let url = Platform.OS === 'ios'? config.api.aurl:config.api.url
@@ -14,7 +14,11 @@ function HomeScreen(props) {
   useEffect(() => {
     // GetData();
   });
-  const {signOut} = useContext(AuthContext)
+  // loginState, authActions
+  const authActions = useContext(AuthContext)
+  const loginState = useContext(StateContext)
+  const {signOut} = authActions
+  const {user} = loginState
 
   const GetData = async () => {
     try {
@@ -32,13 +36,14 @@ function HomeScreen(props) {
   const menu = () => {
     props.navigation.toggleDrawer();
   };
-  // console.log('home props', props)
+  console.log('home props', props, user)
   return (
     <Container>
       <MyHeader onMenuPress={menu} />
       <View style={style.container}>
         <Text style={style.header}>Cayden's Care</Text>
         <Text style={style.header}>{data}</Text>
+        <Text style={style.header}>{user && user.name}</Text>
       <Button
         onPress={() => signOut()}
         title="LogOut"
