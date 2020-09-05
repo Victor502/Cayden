@@ -349,7 +349,7 @@ PODS:
     - React-Core (= 0.63.0)
     - React-cxxreact (= 0.63.0)
     - React-jsi (= 0.63.0)
-  - RNCAsyncStorage (1.11.0):
+  - RNCAsyncStorage (1.12.0):
     - React
   - RNCMaskedView (0.1.10):
     - React
@@ -590,7 +590,7 @@ SPEC CHECKSUMS:
   React-RCTText: ba503bf4cce41881ca258ba789c33e017955efdd
   React-RCTVibration: 77ab1cf4a5eb854b88ad5ed3e9d8509ed124525e
   ReactCommon: f63556ee9e41e9802257228237e5e660451a03cf
-  RNCAsyncStorage: db711e29e5e0500d9bd21aa0c2e397efa45302b1
+  RNCAsyncStorage: 3eea36d9460c5159b592f9ecbe5a77f8aca98006
   RNCMaskedView: f5c7d14d6847b7b44853f7acb6284c1da30a3459
   RNFBApp: 6fd8a7e757135d4168bf033a8812c241af7363a0
   RNFBAuth: 82b94c2f0a851be529a19f5fda2dffb390bfdd7f
@@ -604,4 +604,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 8cf6fc8a3e6fe76001d6b5a8f6d7c4ec0d435cb0
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.9.3
