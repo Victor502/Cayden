@@ -1,33 +1,33 @@
-import React, {useReducer} from 'react'
+import React, {useReducer} from 'react';
 import config from '../assets/config/config.js';
 import Utility from '../assets/Utility.js';
 import AsyncStorage from '@react-native-community/async-storage';
+import {Platform} from 'react-native';
 import {initialState, loginReducer} from '../context/authReducer';
 
 // for local development
-let url = Platform.OS === 'ios'? config.api.aurl : config.api.url
+let url = Platform.OS === 'ios' ? config.api.aurl : config.api.url;
 
 export const startLoginProcess = async () => {
   console.log('startloginprocess 1');
-    try {
-      // Check if signed in before
-      let access_token = await getAccessToken();
-      console.log('get token', access_token);
-      // access_token == true mean that we have signed in before
-      if (access_token) {
-        // Get user info from login to facebook or backend
-        let user = await getUserInfo(access_token);
+  try {
+    // Check if signed in before
+    let access_token = await getAccessToken();
+    console.log('get token', access_token);
+    // access_token == true mean that we have signed in before
+    if (access_token) {
+      // Get user info from login to facebook or backend
+      let user = await getUserInfo(access_token);
 
-        // Check if user and required field is present and not undefined (but this should not happen)
-        if (
-          typeof user !== 'undefined' &&
-          user &&
-          typeof user.email !== 'undefined' &&
-          typeof user.name !== 'undefined' &&
-          user.email &&
-          user.name
-        ) {
-            
+      // Check if user and required field is present and not undefined (but this should not happen)
+      if (
+        typeof user !== 'undefined' &&
+        user &&
+        typeof user.email !== 'undefined' &&
+        typeof user.name !== 'undefined' &&
+        user.email &&
+        user.name
+      ) {
         //   dispatch({
         //     type: TYPES.SET_USER,
         //     payload: user_data.user,
@@ -36,14 +36,13 @@ export const startLoginProcess = async () => {
         //     type: TYPES.SET_LOGGEDIN_STATE,
         //     payload: true,
         //   });
-          console.log('signed in success');
-        }
+        console.log('signed in success');
       }
-    } catch (err) {
-      console.log('Start login process catch', err);
-      throw new Error(err);
     }
-
+  } catch (err) {
+    console.log('Start login process catch', err);
+    throw new Error(err);
+  }
 };
 
 /**
@@ -80,10 +79,10 @@ export const _signIn = async (email, password) => {
       typeof res.user !== 'undefined' &&
       res.user
     ) {
-      console.log('_signin', res.user)
+      console.log('_signin', res.user);
       return res.user;
     } else {
-      return res
+      return res;
     }
   } catch (e) {
     throw new Error(e);

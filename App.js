@@ -26,7 +26,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 // @TODO: This is to hide a Warning caused by NativeBase after upgrading to RN 0.62
 LogBox.ignoreLogs([
   'Animated: `useNativeDriver` was not specified. This is a required option and must be explicitly set to `true` or `false`',
-])
+]);
 // ------- END OF WARNING SUPPRESSION
 
 const Drawer = createDrawerNavigator();
@@ -40,7 +40,7 @@ export default function App() {
     let user;
     //check if user is logged in or out
     async function getToken() {
-      dispatch({type: 'LOADING', loading: true})
+      dispatch({type: 'LOADING', loading: true});
       userToken = await AsyncStorage.getItem(
         config.storage.key_prefix + 'local_token',
       );
@@ -65,34 +65,34 @@ export default function App() {
             // setIsLoading(true)
             // dispatch({type: 'LOADING', loading: true})
             let user = await _signIn(email, password);
-            console.log(user)
+            console.log(user);
             if (typeof user !== 'undefined' && user && user.err !== 403) {
-              dispatch({type: 'LOADING', loading: true})
+              dispatch({type: 'LOADING', loading: true});
               let setTokenRes = await setToken(email);
               userToken = await getAccessToken(setTokenRes);
               dispatch({type: 'LOGIN', user: user, token: userToken});
             } else {
               Toast.show({
-              text: user.msg,
-              textStyle: { textAlign: 'center', marginVertical: 5 },
-              type: "danger"
-            })
+                text: user.msg,
+                textStyle: {textAlign: 'center', marginVertical: 5},
+                type: 'danger',
+              });
             }
           } catch (err) {
             console.log(err);
             Toast.show({
               text: err.message,
-              textStyle: { textAlign: 'center', marginVertical: 5 },
-              type: "danger"
-            })
+              textStyle: {textAlign: 'center', marginVertical: 5},
+              type: 'danger',
+            });
           }
         } else {
           console.log('not good log in');
           Toast.show({
-              text: 'Email and Password are Required!\nPlease try Again!',
-              textStyle: { textAlign: 'center', marginVertical: 5 },
-              type: "danger"
-            })
+            text: 'Email and Password are Required!\nPlease try Again!',
+            textStyle: {textAlign: 'center', marginVertical: 5},
+            type: 'danger',
+          });
         }
       },
       signOut: async () => {
@@ -127,26 +127,29 @@ export default function App() {
   // add drawerContent File for log out
   return (
     <Root>
-    <AuthContext.Provider value={authActions}>
-      <StateContext.Provider value={appState}>
-        <NavigationContainer>
-          {appState.userToken !== null ? (
-            <Drawer.Navigator initialRouteName="Home">
-              <Drawer.Screen name="Home" component={HomeScreen} />
-              <Drawer.Screen name="Meds" component={MedicineScreen} />
-              <Drawer.Screen name="Diet" component={DietScreen} />
-              <Drawer.Screen name="Diapers" component={DiaperScreen} />
-            </Drawer.Navigator>
-          ) : (
-            <Stack.Navigator initialRouteName="SignIn">
-              <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-              <Stack.Screen name="SignIn" component={SignIn} />
-              <Stack.Screen name="Register" component={Register} />
-            </Stack.Navigator>
-          )}
-        </NavigationContainer>
-      </StateContext.Provider>
-    </AuthContext.Provider>
+      <AuthContext.Provider value={authActions}>
+        <StateContext.Provider value={appState}>
+          <NavigationContainer>
+            {appState.userToken !== null ? (
+              <Drawer.Navigator initialRouteName="Home">
+                <Drawer.Screen name="Home" component={HomeScreen} />
+                <Drawer.Screen name="Meds" component={MedicineScreen} />
+                <Drawer.Screen name="Diet" component={DietScreen} />
+                <Drawer.Screen name="Diapers" component={DiaperScreen} />
+              </Drawer.Navigator>
+            ) : (
+              <Stack.Navigator initialRouteName="SignIn">
+                <Stack.Screen
+                  name="ForgotPassword"
+                  component={ForgotPassword}
+                />
+                <Stack.Screen name="SignIn" component={SignIn} />
+                <Stack.Screen name="Register" component={Register} />
+              </Stack.Navigator>
+            )}
+          </NavigationContainer>
+        </StateContext.Provider>
+      </AuthContext.Provider>
     </Root>
   );
 }
